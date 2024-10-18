@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "c-lsp"
+version = "0.1.0"
+description = "LSP for C"
+authors = ["Jacob <jacob@jaso5.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+tree-sitter-c = "^0.23.1"
+pygls = "^2.0.0a1"
+tree-sitter = "^0.23.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

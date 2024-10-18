@@ -1,0 +1,4 @@
+.venv
+.vscode
+lsp.log
+src/__pycache__
