@@ -21,7 +21,19 @@ Our experimental setup is:
 
 ## How to build
 
+The recommended python package manager is [Poetry](https://python-poetry.org/), install  the required dependencies using:
+
+> `poetry install`
+
 ## How to configure and run
+
+With poetry, run:
+
+> `poetry run lsp` 
+
+By default the LSP uses STDIO based communication, however you can use the tcp flag to set an IP and port to talk over:
+
+> `poetry run lsp --tcp 127.0.0.1:5007`
 
 ## Features
 

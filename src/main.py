@@ -1,5 +1,6 @@
 import logging
 import datetime
+import argparse
 
 from lsprotocol import types
 from pygls.lsp.server import LanguageServer
@@ -10,13 +11,8 @@ from tree_sitter import Language, Parser, Tree, Node
 C_LANGUAGE = Language(tsc.language())
 parser = Parser(C_LANGUAGE)
 
-# IP = '127.0.0.1'
-# PORT = 8080
-
-logging.basicConfig(filename='lsp.log', filemode='w', level=logging.DEBUG)
-logging.info(f"Started Server {datetime.datetime.now()}")
-
 trees: dict[str, Tree] = {}
+
 
 class CLS(LanguageServer):
     """Language server demonstrating "push-model" diagnostics."""
@@ -33,10 +29,10 @@ class CLS(LanguageServer):
 
         # TODO: Figure out how to reuse a tree
         # if old_tree:
-            # trees[document.uri] = parser.parse(src, old_tree)
+        # trees[document.uri] = parser.parse(src, old_tree)
         # else:
         trees[document.uri] = parser.parse(src)
-        
+
         tree = trees[document.uri]
         root = tree.root_node
 
@@ -49,9 +45,9 @@ class CLS(LanguageServer):
                 logging.error(f"Error node: {node}, sp:{sp}, ep:{ep}")
 
                 diagnostics.append(types.Diagnostic(
-                    message = "Failed to parse",
-                    severity = types.DiagnosticSeverity.Error,
-                    range = types.Range(
+                    message="Failed to parse",
+                    severity=types.DiagnosticSeverity.Error,
+                    range=types.Range(
                         types.Position(sp.row, sp.column),
                         types.Position(ep.row, ep.column),
                     )
@@ -99,7 +95,9 @@ class CLS(LanguageServer):
 
         # self.diagnostics[document.uri] = (document.version, diagnostics)
 
+
 server = CLS('c-lsp', 'v0.1')
+
 
 @server.feature(types.TEXT_DOCUMENT_DID_OPEN)
 def did_open(ls: CLS, params: types.DidOpenTextDocumentParams):
@@ -133,5 +131,27 @@ def did_change(ls: CLS, params: types.DidOpenTextDocumentParams):
         )
 
 
-# server.start_tcp(IP, PORT)
-server.start_io()
+def run():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--tcp",
+        # "127.0.0.1:5007", # Breaks the argument parsing as tcp is always set
+        help="Sets the LSP to communicate over TCP with ip:port"
+    )
+
+    args = parser.parse_args()
+
+    logging.basicConfig(filename='lsp.log', filemode='w', level=logging.DEBUG)
+    logging.info(f"Started Server {datetime.datetime.now()}")
+
+    if args.tcp:
+        ip, port = args.tcp.split(':')
+        print(f"Starting IO on TCP {ip}:{port}")
+        server.start_tcp(ip, int(port))
+    else:
+        print(f"Starting IO on STDIO")
+        server.start_io()
+
+
+if __name__ == "__main__":
+    run()

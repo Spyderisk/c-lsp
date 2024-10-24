@@ -12,6 +12,9 @@ tree-sitter-c = "^0.23.1"
 pygls = "^2.0.0a1"
 tree-sitter = "^0.23.1"
 
+[tool.poetry.scripts]
+lsp = "src.main:run"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
