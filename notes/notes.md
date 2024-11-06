@@ -1,8 +1,23 @@
-# Tress-sitter based LSP
+# Investigating a Tree-sitter based LSP
+
+[Tree-sitter](https://tree-sitter.github.io/tree-sitter/)
+is a very fast, incremental parser that can do error recovery. It supports
+[nearly 500 languages](https://github.com/tree-sitter/tree-sitter/wiki/List-of-parsers),
+and is intended for use in language editors and IDEs.
+We wanted to learn how feasible it is to have an LSP with tree-sitter behind it,
+rather than the editor/IDE supporting tree-sitter directly (which many editors also do.)
+This is interesting because LSP adds many higher-level features in a standard way,
+such as syntax highlighting.
+
 
 ## Research
 
-- Thought we could use this <https://github.com/neomutt/lsp-tree-sitter> to implement an LSP simply, however this seems only applicable to configuration/serialization languages (JSON, TOML etc)
+### lsp-tree-sitter
+- Thought we could use this
+[python library for building tree-sitter LSPs](https://lsp-tree-sitter.readthedocs.io/en/latest/)
+to do most of the work
+- was developed for simple Domain Specific Languages (DSLs)
+- seems only applicable to configuration/serialization languages (JSON, TOML etc)
 
 ## Implementation
 
@@ -21,6 +36,7 @@
 
 - Tree sitter is very useful for parsing our language, however it is not very smart.
   - No concept of scope, symbols etc
+    [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
 - For our lsp to implement "Smart" features, it requires additional knowledge about the language embedded within.
 - We can implement basic features generic of our grammar, but a generic smart lsp is not possible
   - Syntax errors can be implemented generically by taking errored tokens, and (in theory) using the grammar at runtime to find what could be there in place of the errored token
