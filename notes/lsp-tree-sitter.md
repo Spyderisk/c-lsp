@@ -1,10 +1,11 @@
 # Investigating a Tree-sitter based LSP
 
 [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) generates parsers for any language, given a grammar. Tree-sitter
-parsers are emitted in C, and are very fast, incremental with error recovery. It supports [nearly 500
+parsers are emitted in C, and are very fast, incremental and fault-tolerant. Tree-sitter comes with grammars for [nearly 500
 languages](https://github.com/tree-sitter/tree-sitter/wiki/List-of-parsers). Tree-sitter parsers are intended for use in
-language editors and IDEs, where it is common for there to be many errors that change rapidly. A Tree-sitter parser can keep
-up with the parse tree changing with every keystroke a developer types. 
+language editors and IDEs, where it is common for there to be many errors that change rapidly. A Tree-sitter parser can be 
+called with every keystroke a developer types, with only the changes to the tree being parsed (incremental) and parsing
+able to continue after many classes of error (fault-tolerant).
 
 Many editors support tree-sitter directly to do things like keyword colouring and highlighting parse errors. But we want our
 editors to have knowledge of the target language at a higher level, for example syntax highlighting. Syntax highlighting
