@@ -34,6 +34,13 @@ to do most of the work
 - Debugging tools for LSP also exist
   - <https://lsp-devtools.readthedocs.io/en/latest/lsp-devtools/guide/getting-started.html>
 
+#### NeoVim
+
+- Neovim (A form of Vim, which is a fork of Vi) has good support for LSP, along with nice debugging tools
+- LSPs are configured using a Lua based config system
+  - Nvim has a core way to configure these, but most seem to use this abstraction library <https://github.com/neovim/nvim-lspconfig>. It also contains example configs for many common LSPs.
+  - This has a dependency on LuaRocks, which I need to install
+
 ### Tree Sitter
 
 - Tree sitter is very useful for parsing our language, however it is not very smart.
