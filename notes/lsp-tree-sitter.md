@@ -18,7 +18,7 @@ The potential use cases are at least:
   [custom plugin](https://protegewiki.stanford.edu/wiki/Protege_Plugin_Library), which again will need
   some detailed knowledge of the language.
 
-This investigation focusses on the sector option, while doing a lot of work that is relevant to the first.
+This investigation focusses on the second option, while doing a lot of work that is relevant to the first.
 
 # Architectural view
 
@@ -64,14 +64,20 @@ to do most of the work
 - seems only applicable to configuration/serialization languages (JSON, TOML etc)
 - we abandoned lsp-tree-sitter
 
-# How Tree Sitter works
+## PYTHON-LSP insert-details-here XXX
+
+- detail 1
+- detail 2
+
+# Technical details of tree-sitter
 
 Since tree-sitter is the most significant part of our investigation we need to know what it does and does not do.
 
 - Tree sitter is very useful for parsing our language, however it is not very smart.
   - No concept of scope, symbols etc.
   - See the online [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground) to get a sense of what it can do
-- For our lsp to implement "Smart" features, it requires additional knowledge about the language embedded within.
+- For our lsp to implement "Smart" features, it requires additional knowledge about the language embedded within. This is
+  something we need to code ourselves.
 - We can implement basic features generic of our grammar, but a generic smart lsp is not possible with tree-sitter
   - Syntax errors can be implemented generically by taking errored tokens, and (in theory) using the grammar at runtime to find what could be there in place of the errored token
   - ```c
@@ -105,4 +111,14 @@ Since tree-sitter is the most significant part of our investigation we need to k
 ## Debugging
 
 - An idea was to implement some form of debugging for use with Kappa, our eventual target language.
-- This would 
+- This would XXX
+
+# Technical details of the LSP
+
+- As of LSP version X.Y, all/some/XXX of the features we need are part of the protocol
+- Not all implementations support all features
+- At the LSP level, the features we need are: XXX, XXX, XXX
+- XXX
+
+
+
